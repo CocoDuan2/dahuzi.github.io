@@ -1,0 +1,218 @@
+/* 自定义字体 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+}
+
+.serif {
+    font-family: 'Noto Serif SC', serif;
+}
+
+/* 渐变文字 */
+.gradient-text {
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* 文件类型标签 */
+.file-type {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    border-bottom-left-radius: 0.375rem;
+}
+
+.file-type.html {
+    background-color: #ef4444;
+    color: white;
+}
+
+.file-type.md {
+    background-color: #3b82f6;
+    color: white;
+}
+
+/* 过滤按钮活动状态 */
+.filter-btn.active {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+/* 文章卡片悬停效果 */
+.article-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* 内容容器样式 */
+.markdown-content {
+    line-height: 1.6;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.markdown-content h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1.5rem 0 1rem;
+    color: #1e40af;
+}
+
+.markdown-content h2 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin: 1.5rem 0 1rem;
+    color: #2563eb;
+}
+
+.markdown-content h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1.25rem 0 0.75rem;
+    color: #3b82f6;
+}
+
+.markdown-content h4 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 1rem 0 0.5rem;
+    color: #60a5fa;
+}
+
+.markdown-content p {
+    margin-bottom: 1rem;
+}
+
+.markdown-content ul, .markdown-content ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.markdown-content ul {
+    list-style-type: disc;
+}
+
+.markdown-content ol {
+    list-style-type: decimal;
+}
+
+.markdown-content li {
+    margin-bottom: 0.5rem;
+}
+
+.markdown-content blockquote {
+    border-left: 4px solid #3b82f6;
+    padding-left: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    font-style: italic;
+    color: #4b5563;
+}
+
+.markdown-content code {
+    background-color: #f1f5f9;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.markdown-content pre {
+    background-color: #f1f5f9;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.markdown-content pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+}
+
+.markdown-content a {
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+.markdown-content a:hover {
+    text-decoration: underline;
+}
+
+.markdown-content table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.markdown-content th, .markdown-content td {
+    border: 1px solid #d1d5db;
+    padding: 0.5rem;
+}
+
+.markdown-content th {
+    background-color: #f1f5f9;
+    font-weight: bold;
+}
+
+/* 文章内容容器样式 */
+.article-container {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* 黑暗模式适配 */
+.dark {
+    background-color: #1a1a1a;
+    color: #f5f5f5;
+}
+
+.dark .markdown-content h1,
+.dark .markdown-content h2,
+.dark .markdown-content h3,
+.dark .markdown-content h4 {
+    color: #93c5fd;
+}
+
+.dark .markdown-content blockquote {
+    color: #9ca3af;
+}
+
+.dark .markdown-content code {
+    background-color: #374151;
+}
+
+.dark .markdown-content pre {
+    background-color: #1e293b;
+}
+
+.dark .markdown-content a {
+    color: #93c5fd;
+}
+
+.dark .markdown-content th, .dark .markdown-content td {
+    border-color: #4b5563;
+}
+
+.dark .markdown-content th {
+    background-color: #374151;
+}
+
+.dark pre {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+
+.dark code {
+    color: #93c5fd !important;
+} 
