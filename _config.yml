@@ -1,3 +1,10 @@
 theme: jekyll-theme-minimal
 title: 大胡子网站
-description: 智能体12要素 - 构建可靠LLM应用的原则 
+description: 智能体12要素 - 构建可靠LLM应用的原则
+baseurl: "/dahuzi.github.io"
+url: "https://cocoduan2.github.io"
+github_username: CocoDuan2
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+markdown: kramdown 

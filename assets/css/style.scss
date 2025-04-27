@@ -1,0 +1,29 @@
+@import "{{ site.theme }}";
+
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Noto Serif SC', serif;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.container-lg {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 1rem;
+}
+
+footer {
+  border-top: 1px solid #eaecef;
+  padding-top: 1rem;
+  color: #6a737d;
+  font-size: 0.9rem;
+} 
