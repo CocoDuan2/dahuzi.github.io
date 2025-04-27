@@ -63,6 +63,62 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+        
+        /* 开关样式 */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+        }
+        
+        input:checked + .slider {
+            background-color: #3b82f6;
+        }
+        
+        input:focus + .slider {
+            box-shadow: 0 0 1px #3b82f6;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+        
+        .slider.round {
+            border-radius: 34px;
+        }
+        
+        .slider.round:before {
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
@@ -77,6 +133,23 @@
                     <a href="#articles" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">文章</a>
                     <a href="#categories" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">分类</a>
                     <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">关于我</a>
+                    
+                    <div class="relative inline-block text-left">
+                        <button id="settingsDropdown" type="button" class="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                        <div id="settingsMenu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none hidden">
+                            <div class="py-1">
+                                <div class="px-4 py-2 flex items-center justify-between">
+                                    <span class="text-sm">显示精选文章</span>
+                                    <label class="switch">
+                                        <input type="checkbox" id="toggleFeatured" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <!-- 主题切换按钮 -->
                     <button id="themeToggle" class="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
@@ -295,6 +368,11 @@
             }
         });
         
+        // 网站配置
+        const siteConfig = {
+            showFeaturedArticles: localStorage.getItem('showFeaturedArticles') !== 'false', // 默认为 true，但优先采用本地存储的值
+        };
+        
         // 文章数据（初始为空，将通过函数加载）
         let articles = [];
         
@@ -331,11 +409,20 @@
             featuredArticles.innerHTML = '';
             categoriesList.innerHTML = '';
             
-            // 加载精选文章
-            const featuredArticlesData = articles.filter(article => article.featured);
-            featuredArticlesData.forEach(article => {
-                featuredArticles.innerHTML += renderFeaturedArticle(article);
-            });
+            // 加载精选文章 - 根据配置决定是否显示
+            if (siteConfig.showFeaturedArticles) {
+                const featuredSection = document.querySelector('section.mb-16:first-of-type');
+                featuredSection.style.display = 'block';
+                
+                const featuredArticlesData = articles.filter(article => article.featured);
+                featuredArticlesData.forEach(article => {
+                    featuredArticles.innerHTML += renderFeaturedArticle(article);
+                });
+            } else {
+                // 隐藏精选文章部分
+                const featuredSection = document.querySelector('section.mb-16:first-of-type');
+                featuredSection.style.display = 'none';
+            }
             
             // 加载所有文章
             articles.forEach(article => {
@@ -444,7 +531,7 @@
                         "date": "2025-04-25",
                         "type": "html",
                         "filename": "agent12",
-                        "featured": true,
+                        "featured": true,  // 是否作为精选文章显示
                         "category": "人工智能",
                         "icon": "lightbulb"
                     },
@@ -455,7 +542,7 @@
                         "date": "2025-04-27",
                         "type": "html",
                         "filename": "前端网页生成提示词",
-                        "featured": true,
+                        "featured": false,  
                         "category": "提示词",
                         "icon": "robot"
                     },
@@ -466,7 +553,7 @@
                         "date": "2025-04-27",
                         "type": "html",
                         "filename": "openai_prompts",
-                        "featured": true,
+                        "featured": true,  // 是否作为精选文章显示
                         "category": "提示词",
                         "icon": "robot"
                     }
@@ -745,7 +832,42 @@
         document.addEventListener('DOMContentLoaded', () => {
             // 加载文章列表
             fetchArticlesList();
+            
+            // 初始化设置下拉菜单
+            initializeSettings();
         });
+        
+        // 初始化设置下拉菜单
+        function initializeSettings() {
+            const settingsDropdown = document.getElementById('settingsDropdown');
+            const settingsMenu = document.getElementById('settingsMenu');
+            const toggleFeatured = document.getElementById('toggleFeatured');
+            
+            // 设置初始状态
+            toggleFeatured.checked = siteConfig.showFeaturedArticles;
+            
+            // 点击设置图标显示/隐藏菜单
+            settingsDropdown.addEventListener('click', (e) => {
+                e.stopPropagation();
+                settingsMenu.classList.toggle('hidden');
+            });
+            
+            // 点击页面其他地方隐藏菜单
+            document.addEventListener('click', (e) => {
+                if (!settingsDropdown.contains(e.target) && !settingsMenu.contains(e.target)) {
+                    settingsMenu.classList.add('hidden');
+                }
+            });
+            
+            // 精选文章显示切换
+            toggleFeatured.addEventListener('change', () => {
+                siteConfig.showFeaturedArticles = toggleFeatured.checked;
+                localStorage.setItem('showFeaturedArticles', siteConfig.showFeaturedArticles);
+                
+                // 重新加载文章列表，应用新设置
+                loadArticles();
+            });
+        }
     </script>
 </body>
 </html>
